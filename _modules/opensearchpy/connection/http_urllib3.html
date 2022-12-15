@@ -17,6 +17,7 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script src="../../../_static/clipboard.min.js"></script>
         <script src="../../../_static/copybutton.js"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -63,9 +64,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>opensearchpy.connection.http_urllib3</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">opensearchpy.connection.http_urllib3</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -124,15 +125,6 @@
 <span class="c1"># for SSL kwargs if also using an SSLContext.</span>
 <span class="n">VERIFY_CERTS_DEFAULT</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
 <span class="n">SSL_SHOW_WARN_DEFAULT</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
-
-<span class="n">CA_CERTS</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">certifi</span>
-
-    <span class="n">CA_CERTS</span> <span class="o">=</span> <span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">()</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">pass</span>
 
 
 <span class="k">def</span> <span class="nf">create_ssl_context</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -262,7 +254,7 @@
             <span class="k">if</span> <span class="n">ssl_show_warn</span> <span class="ow">is</span> <span class="n">SSL_SHOW_WARN_DEFAULT</span><span class="p">:</span>
                 <span class="n">ssl_show_warn</span> <span class="o">=</span> <span class="kc">True</span>
 
-            <span class="n">ca_certs</span> <span class="o">=</span> <span class="n">CA_CERTS</span> <span class="k">if</span> <span class="n">ca_certs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ca_certs</span>
+            <span class="n">ca_certs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ca_certs</span><span class="p">()</span> <span class="k">if</span> <span class="n">ca_certs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ca_certs</span>
             <span class="k">if</span> <span class="n">verify_certs</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">ca_certs</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
@@ -359,7 +351,7 @@
             <span class="n">method</span><span class="p">,</span> <span class="n">full_url</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">orig_body</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">raw_data</span><span class="p">,</span> <span class="n">duration</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">getheaders</span><span class="p">(),</span> <span class="n">raw_data</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">raw_data</span>
 
     <span class="k">def</span> <span class="nf">get_response_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">header</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="n">value</span> <span class="k">for</span> <span class="n">header</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
