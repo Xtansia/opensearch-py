@@ -181,4 +181,4 @@ def test_index_template_can_have_order():
 async def test_index_template_save_result(mock_client):
     it = AsyncIndexTemplate("test-template", "test-*")
 
-    assert await it.save(using="mock") == mock_client.indices.put_template()
+    assert (await it.save(using="mock")) == (await mock_client.indices.put_template())

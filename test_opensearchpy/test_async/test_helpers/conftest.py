@@ -9,7 +9,7 @@
 
 
 import pytest
-from mock import Mock
+from mock import AsyncMock
 from pytest import fixture
 
 from opensearchpy.connection.async_connections import add_connection, async_connections
@@ -19,7 +19,7 @@ pytestmark = pytest.mark.asyncio
 
 @fixture
 async def mock_client(dummy_response):
-    client = Mock()
+    client = AsyncMock()
     client.search.return_value = dummy_response
     await add_connection("mock", client)
     yield client
